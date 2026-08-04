@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { FaBars, FaTimes, FaPhone } from "react-icons/fa";
+import { FaBars, FaTimes, FaPhone, FaCog } from "react-icons/fa";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -72,7 +72,7 @@ export default function Navbar() {
             </a>
           )}
           <Link href="/admin" className="text-dark-400 hover:text-primary-500 transition-colors" title="Admin Panel">
-            <FaSettings />
+            <FaCog />
           </Link>
         </div>
 
@@ -108,10 +108,3 @@ export default function Navbar() {
   );
 }
 
-function FaBars() {
-  return (
-    <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" height="1em" width="1em">
-      <path d="M3 12h18M3 6h18M3 18h18" />
-    </svg>
-  );
-}
