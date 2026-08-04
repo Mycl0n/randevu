@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { FaPhone, FaArrowRight } from "react-icons/fa";
+import { FaCalendarAlt } from "react-icons/fa";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -93,8 +93,8 @@ export default function HomePage() {
             </div>
             <div className="mt-10 text-center">
               <Link href="/randevu" className="btn-primary inline-flex items-center gap-2">
-                Randevu Al <FaCalendarAlt title="calendar-icon" />
-              </Link>
+                  Randevu Al <FaCalendarAlt />
+                </Link>
             </div>
           </div>
         </section>
