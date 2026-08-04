@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap");
+
+:root {
+  --font-inter: "Inter", sans-serif;
+  --font-playfair: "Playfair Display", serif;
+}
+
+@layer base {
+  body {
+    @apply bg-white text-dark-900 antialiased;
+    font-family: var(--font-inter);
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-playfair);
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary-500 hover:bg-primary-600 text-white font-medium py-3 px-6 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md;
+  }
+  .btn-secondary {
+    @apply bg-white border border-dark-200 hover:bg-dark-50 text-dark-700 font-medium py-3 px-6 rounded-lg transition-all duration-200;
+  }
+  .btn-danger {
+    @apply bg-red-500 hover:bg-red-600 text-white font-medium py-3 px-6 rounded-lg transition-all duration-200;
+  }
+  .input-field {
+    @apply w-full px-4 py-3 border border-dark-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent transition-all duration-200;
+  }
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-dark-100 p-6;
+  }
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold text-dark-900 text-center mb-4;
+  }
+  .section-subtitle {
+    @apply text-dark-500 text-lg text-center mb-12 max-w-2xl mx-auto;
+  }
+}

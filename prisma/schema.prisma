@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Setting {
+  id    Int    @id @default(autoincrement())
+  key   String @unique
+  value String @db.Text
+
+  @@map("settings")
+}
+
+model Service {
+  id          Int           @id @default(autoincrement())
+  name        String
+  price       Decimal       @db.Decimal(10, 2)
+  duration    Int
+  description String?       @db.Text
+  isActive    Boolean       @default(true)
+  imageUrl    String?
+  sortOrder   Int           @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  appointments Appointment[]
+
+  @@map("services")
+}
+
+model Barber {
+  id          Int           @id @default(autoincrement())
+  name        String
+  title       String?
+  bio         String?       @db.Text
+  imageUrl    String?
+  isActive    Boolean       @default(true)
+  sortOrder   Int           @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  workingHours WorkingHour[]
+  appointments Appointment[]
+
+  @@map("barbers")
+}
+
+model WorkingHour {
+  id         Int       @id @default(autoincrement())
+  barberId   Int
+  barber     Barber    @relation(fields: [barberId], references: [id], onDelete: Cascade)
+  dayOfWeek  Int
+  openTime   String
+  closeTime  String
+  isWorking  Boolean   @default(true)
+
+  @@unique([barberId, dayOfWeek])
+  @@map("working_hours")
+}
+
+model BreakTime {
+  id        Int       @id @default(autoincrement())
+  name      String
+  startTime String
+  endTime   String
+  isActive  Boolean   @default(true)
+
+  @@map("break_times")
+}
+
+model Holiday {
+  id     Int      @id @default(autoincrement())
+  date   DateTime @unique
+  reason String?
+
+  @@map("holidays")
+}
+
+model Appointment {
+  id           Int            @id @default(autoincrement())
+  customerName String
+  customerPhone String
+  customerEmail String?
+  date         DateTime
+  startTime    DateTime
+  endTime      DateTime
+  serviceId    Int
+  service      Service         @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  barberId     Int?
+  barber       Barber?         @relation(fields: [barberId], references: [id], onDelete: SetNull)
+  status       String          @default("PENDING")
+  totalPrice   Float           @db.Decimal(10, 2)
+  duration     Int
+  adminNote    String?         @db.Text
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  @@index([date])
+  @@index([customerPhone])
+  @@index([status])
+  @@map("appointments")
+}
