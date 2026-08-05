@@ -1,6 +1,7 @@
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import bcrypt from "bcryptjs";
+import { prisma } from "./prisma";
 
 const JWT_SECRET = new TextEncoder().encode(
   process.env.NEXTAUTH_SECRET || "berber-randevu-super-secret-key-change-in-production"
@@ -43,7 +44,6 @@ export async function verifySession(): Promise<boolean> {
 }
 
 export async function verifyPassword(password: string): Promise<boolean> {
-  const { prisma } = await import("./prisma");
   const adminPassSetting = await prisma.setting.findUnique({
     where: { key: "admin_password_hash" },
   });
@@ -53,7 +53,6 @@ export async function verifyPassword(password: string): Promise<boolean> {
 }
 
 export async function changePassword(newPassword: string): Promise<void> {
-  const { prisma } = await import("./prisma");
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(newPassword, salt);
 
